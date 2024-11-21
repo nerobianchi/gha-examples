@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-staging
     # Manual trigger required for this job
-    if: ${{ github.event_name == 'workflow_call' }}
+    # if: ${{ github.event_name == 'workflow_call' }}
     steps:
       - name: Deploy to Production
         run: echo "Deploying to Production environment..."
