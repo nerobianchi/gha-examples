@@ -1,14 +1,14 @@
-
 name: CI/CD Pipeline
 
 on:
-  # Trigger on PR creation or when code is pushed to 'main'
-  pull_request:
   push:
-    branches:
-      - main
-
-  # Manual trigger for production deployment
+    branches: [ main ]
+    paths-ignore:
+      - "**/*.gitattributes"
+      - "**/*.gitignore"
+      - "**/*.md"
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
