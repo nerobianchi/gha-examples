@@ -8,15 +8,15 @@ on:
         type: string
 
 jobs:
-  deploy-step-1:
-    name: Deploy Step 1 - ${{ inputs.environment }}  # Dynamic name
-    runs-on: ubuntu-latest
-    concurrency:
-      group: deploy-step-1-lock
-      cancel-in-progress: false
-    steps:
-      - name: Deploy Step 1
-        run: echo "Running Step 1 for ${{ inputs.environment }}"
+    deploy-step-1:
+      name: Deploy Step 1 - ${{ inputs.environment }}
+      runs-on: ubuntu-latest
+      concurrency:
+        group: deploy-step-1-lock
+        cancel-in-progress: false  # ⬅ Ensures jobs WAIT instead of being canceled
+      steps:
+        - name: Deploy Step 1
+          run: echo "Running Step 1 for ${{ inputs.environment }}"
 
 #   deploy-step-2:
 #     name: Deploy Step 2 - ${{ inputs.environment }}  # Dynamic name
