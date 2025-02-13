@@ -12,8 +12,10 @@ jobs:
       name: Deploy Step 1 - ${{ inputs.environment }}
       runs-on: ubuntu-latest
       concurrency:
-        group: deploy-step-1-lock
-        cancel-in-progress: false  # ⬅ Ensures jobs WAIT instead of being canceled
+        # group: deploy-step-1-lock
+        # cancel-in-progress: false  # ⬅ Ensures jobs WAIT instead of being canceled
+        group: deploy-step-1-${{ github.ref }}
+        cancel-in-progress: true
       steps:
         - name: Deploy Step 1
           run: echo "Running Step 1 for ${{ inputs.environment }}"
