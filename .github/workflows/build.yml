@@ -22,24 +22,22 @@ jobs:
     steps:
       - name: Run Bash Script with Time Threshold
         run: |
-          # Set time threshold (in seconds)
-          DURATION=60  # 5 minutes
-          START_TIME=$(date +%s)
+          TIMEOUT=60 # Maximum wait time in seconds
+          START_TIME=${SECONDS}
+
+          echo "Waiting for application pods to be ready..."
 
           while true; do
-            echo "Hello World"
-            sleep 1  # Echo every second
+            ELAPSED=$((SECONDS - START_TIME))
 
-            # Check elapsed time
-            CURRENT_TIME=$(date +%s)
-            ELAPSED=$((CURRENT_TIME - START_TIME))
-
-            if [ $ELAPSED -ge $DURATION ]; then
-              echo "Time limit reached: $ELAPSED seconds"
-              break
+            if (( ELAPSED >= TIMEOUT )); then
+              echo "Timeout waiting for pods to be ready after ${ELAPSED} seconds."
+              exit 1
             fi
-          done
 
+            echo "Waiting for application pods to be ready... (${ELAPSED} seconds elapsed)"
+            sleep 10
+          done
 
   # deploy:
   #   strategy:
