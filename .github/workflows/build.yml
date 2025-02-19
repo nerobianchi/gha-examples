@@ -17,13 +17,37 @@ env:
   ARTIFACTORY_REPO: art_repo
 
 jobs:
-  deploy:
-    strategy:
-      matrix:
-        environment: [staging, preprod, production]
-    uses: ./.github/workflows/deploy-action.yml
-    with:
-      environment: ${{ matrix.environment }}
+  run-bash-timed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Bash Script with Time Threshold
+        run: |
+          # Set time threshold (in seconds)
+          DURATION=60  # 5 minutes
+          START_TIME=$(date +%s)
+
+          while true; do
+            echo "Hello World"
+            sleep 1  # Echo every second
+
+            # Check elapsed time
+            CURRENT_TIME=$(date +%s)
+            ELAPSED=$((CURRENT_TIME - START_TIME))
+
+            if [ $ELAPSED -ge $DURATION ]; then
+              echo "Time limit reached: $ELAPSED seconds"
+              break
+            fi
+          done
+
+
+  # deploy:
+  #   strategy:
+  #     matrix:
+  #       environment: [staging, preprod, production]
+  #   uses: ./.github/workflows/deploy-action.yml
+  #   with:
+  #     environment: ${{ matrix.environment }}
 
   # build:
   #   runs-on: ubuntu-latest
